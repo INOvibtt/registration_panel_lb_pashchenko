@@ -1,17 +1,13 @@
-// Symmetric encryption key
 const encryptionKey = "secretkey";
 
-// Function to encrypt data
 function encrypt(data) {
     return btoa(data.split("").map(char => String.fromCharCode(char.charCodeAt(0) ^ encryptionKey.charCodeAt(0))).join(""));
 }
 
-// Function to decrypt data
 function decrypt(data) {
     return atob(data).split("").map(char => String.fromCharCode(char.charCodeAt(0) ^ encryptionKey.charCodeAt(0))).join("");
 }
 
-// References to DOM elements
 const loginForm = document.getElementById("login-form");
 const registerForm = document.getElementById("register-form");
 const userTable = document.getElementById("user-table");
@@ -19,24 +15,28 @@ const authorizationPage = document.getElementById("authorization-page");
 const adminPage = document.getElementById("admin-page");
 const userPage = document.getElementById("user-page");
 
-// Admin credentials (stored in database)
-const adminCredentials = { username: "admin", password: "admin123" };
+const adminCredentials = { username: "admin", password: "Admin@123" };
 
-// Event: Register User
 registerForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const username = document.getElementById("reg-username").value;
-    const password = encrypt(document.getElementById("reg-password").value);
+    const password = document.getElementById("reg-password").value;
+
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password)) {
+        alert("Пароль повинен містити мінімум 8 символів, одну велику літеру, одну маленьку літеру, одну цифру та один спеціальний символ.");
+        return;
+    }
+
+    const encryptedPassword = encrypt(password);
 
     const users = JSON.parse(localStorage.getItem("users")) || [];
-    users.push({ username, password });
+    users.push({ username, password: encryptedPassword });
     localStorage.setItem("users", JSON.stringify(users));
 
-    alert("User registered successfully!");
+    alert("Користувача зареєстровано успішно!");
     registerForm.reset();
 });
 
-// Event: Login
 loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const username = document.getElementById("username").value;
@@ -52,23 +52,20 @@ loginForm.addEventListener("submit", (e) => {
         if (user) {
             showPage("user");
         } else {
-            alert("Invalid credentials");
+            alert("Невірні облікові дані");
         }
     }
 });
 
-// Logout buttons
 document.getElementById("logout-admin").addEventListener("click", () => showPage("authorization"));
 document.getElementById("logout-user").addEventListener("click", () => showPage("authorization"));
 
-// Show specific page
 function showPage(page) {
     authorizationPage.style.display = page === "authorization" ? "block" : "none";
     adminPage.style.display = page === "admin" ? "block" : "none";
     userPage.style.display = page === "user" ? "block" : "none";
 }
 
-// Populate admin table
 function populateUserTable() {
     const users = JSON.parse(localStorage.getItem("users")) || [];
     userTable.innerHTML = users.map(u => `
