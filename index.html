@@ -1,53 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Application with Encryption</title>
+    <title>Веб-застосунок із шифруванням</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="app.js"></script>
 </head>
 <body>
-    <!-- Authorization Page -->
+    <!-- Сторінка авторизації -->
     <div id="authorization-page" class="page">
-        <h1>Authorization</h1>
+        <h1>Авторизація</h1>
         <form id="login-form">
-            <label for="username">Username:</label>
-            <input type="text" id="username" required>
-            <label for="password">Password:</label>
+            <label for="username">Логін (лише англійськими літерами):</label>
+            <input type="text" id="username" pattern="[a-zA-Z]+" title="Логін повинен містити лише англійські літери" required>
+            <label for="password">Пароль:</label>
             <input type="password" id="password" required>
-            <button type="submit">Login</button>
+            <button type="submit">Увійти</button>
         </form>
         <form id="register-form">
-            <h2>Register</h2>
-            <label for="reg-username">Username:</label>
-            <input type="text" id="reg-username" required>
-            <label for="reg-password">Password:</label>
-            <input type="password" id="reg-password" required>
-            <button type="submit">Register</button>
+            <h2>Реєстрація</h2>
+            <label for="reg-username">Логін (лише англійськими літерами):</label>
+            <input type="text" id="reg-username" pattern="[a-zA-Z]+" title="Логін повинен містити лише англійські літери" required>
+            <label for="reg-password">Пароль:</label>
+            <input type="password" id="reg-password" title="Пароль повинен містити мінімум 8 символів, одну велику літеру, одну маленьку літеру, одну цифру та один спеціальний символ" required>
+            <button type="submit">Зареєструватися</button>
         </form>
     </div>
 
-    <!-- Administrator Page -->
-    <div id="admin-page" class="page" style="display: none;">
-        <h1>Administrator Page</h1>
+    <!-- Сторінка адміністратора -->
+    <div id="admin-page" class="page hidden">
+        <h1>Сторінка адміністратора</h1>
         <table>
             <thead>
                 <tr>
-                    <th>Username</th>
-                    <th>Password</th>
+                    <th>Логін</th>
+                    <th>Пароль</th>
                 </tr>
             </thead>
             <tbody id="user-table"></tbody>
         </table>
-        <button id="logout-admin">Logout</button>
+        <button id="logout-admin">Вийти</button>
     </div>
 
-    <!-- User Page -->
-    <div id="user-page" class="page" style="display: none;">
-        <h1>User Page</h1>
-        <p>Symmetric encryption is a type of encryption where the same key is used for both encrypting and decrypting the data. It is efficient for secure data transmission when the key is shared securely between the communicating parties.</p>
-        <button id="logout-user">Logout</button>
+    <!-- Сторінка користувача -->
+    <div id="user-page" class="page hidden">
+        <h1>Симетричне шифрування</h1>
+        <p>
+            Симетричне шифрування — це метод шифрування, де для шифрування і дешифрування даних використовується один і той самий ключ. 
+            Основні особливості:
+        </p>
+        <ul>
+            <li>Ефективне для великих обсягів даних.</li>
+            <li>Використовується в протоколах безпеки, таких як SSL/TLS.</li>
+            <li>Приклад алгоритмів: AES, DES, Triple DES.</li>
+        </ul>
+        <p>
+            Головною проблемою симетричного шифрування є безпечна передача ключа між сторонами. Якщо ключ буде викрадено, зловмисники отримають доступ до всіх даних.
+        </p>
+        <button id="logout-user">Вийти</button>
     </div>
 </body>
 </html>
