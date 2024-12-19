@@ -17,6 +17,7 @@ const userPage = document.getElementById("user-page");
 
 const adminCredentials = { username: "admin", password: "Admin@123" };
 
+// Обробка форми реєстрації
 registerForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const username = document.getElementById("reg-username").value;
@@ -37,6 +38,7 @@ registerForm.addEventListener("submit", (e) => {
     registerForm.reset();
 });
 
+// Обробка форми авторизації
 loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const username = document.getElementById("username").value;
@@ -75,3 +77,15 @@ function populateUserTable() {
         </tr>
     `).join("");
 }
+
+// Показати/приховати пароль у формі авторизації
+document.getElementById("show-password-login").addEventListener("change", function () {
+    const passwordField = document.getElementById("password");
+    passwordField.type = this.checked ? "text" : "password";
+});
+
+// Показати/приховати пароль у формі реєстрації
+document.getElementById("show-password-register").addEventListener("change", function () {
+    const passwordField = document.getElementById("reg-password");
+    passwordField.type = this.checked ? "text" : "password";
+});
